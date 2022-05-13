@@ -1,0 +1,17 @@
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+const db = {};
+db.mongoose = mongoose;
+db.user = require("./user.model");
+db.role = require("./role.model");
+db.country = require("./country.model");
+db.state = require("./state.model");
+db.city = require("./city.model");
+db.status = require("./status.model");
+db.customer = require("./customer.model");
+db.driver = require("./driver.model");
+db.driver_document = require("./driver-document.model");
+db.driver_history = require("./driver-history.model");
+db.ride = require("./ride.model");
+db.ROLES = ["admin", "user", "driver", "customer"];
+module.exports = db;
