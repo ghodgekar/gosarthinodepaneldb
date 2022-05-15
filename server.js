@@ -6,6 +6,7 @@ const fileupload = require("express-fileupload");
 const app = express();
 var corsOptions = {
   origin: "https://nodeadminpanel.herokuapp.com"
+  // origin: "http://localhost:4200"
 };
 app.use('/uploads', express.static('uploads'));
 
