@@ -13,5 +13,6 @@ db.driver = require("./driver.model");
 db.driver_document = require("./driver-document.model");
 db.driver_history = require("./driver-history.model");
 db.ride = require("./ride.model");
+db.partner = require("./partner.model");
 db.ROLES = ["admin", "user", "driver", "customer"];
 module.exports = db;

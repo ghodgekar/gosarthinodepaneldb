@@ -66,17 +66,17 @@ function validateDriverForm(payload) {
 exports.rideSave = (req, res) => {
   const ride = new Ride(req.body);
   if (!ride) {
-      return res.status(400).json({
-          message: 'Form validation failed!',
-          errors: 'Please Enter Valid Input'
-      });
+    return res.status(400).json({
+        message: 'Form validation failed!',
+        errors: 'Please Enter Valid Input'
+    });
   }
   let validationResult = validateDriverForm(ride);
   if (!validationResult.success) {
-      return res.status(400).json({
-          message: 'Form validation failed!',
-          errors: validationResult.errors
-      });
+    return res.status(400).json({
+        message: 'Form validation failed!',
+        errors: validationResult.errors
+    });
   }
   ride.save((err, status) => {
     if (err) {

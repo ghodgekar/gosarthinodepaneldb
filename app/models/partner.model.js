@@ -1,27 +1,25 @@
 const mongoose = require("mongoose");
-const Driver = mongoose.model(
-  "Driver",
+const Partner = mongoose.model(
+  "Partner",
   new mongoose.Schema({
-    driver_id: {type:String},
-    name: String,
+    partner_id: String,
+    company_name: String,
+    company_no: String,
+    gst_no: String,
     phone: Number,
-    alt_phone: Number,
     email: String,
-    gender: String,
-    dob: String,
     country: String,
     state: String,
     city: String,
     pincode: Number,
     address: String,
-    device_type: String,
-    status: {type:Number, default: 1},
-    reject_reason: {type:String, default:null},
-    is_active: {type:Number, default: 1},
+    username: String,
+    password: String,
     created_on: {type:Date, default: Date.now()},
     updated_on: {type:Date, default: Date.now()},
+    is_active: {type:Number, default: 1},
   },{
     versionKey: false // You should be aware of the outcome after set to false
   })
 );
-module.exports = Driver;
+module.exports = Partner;

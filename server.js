@@ -30,6 +30,15 @@ require('./app/routes/status.routes')(app);
 require('./app/routes/customer.routes')(app);
 require('./app/routes/driver.routes')(app);
 require('./app/routes/ride.routes')(app);
+require('./app/routes/partner.routes')(app);
+
+app.post("/api/login", (req, res) => {
+  if(req.body.username == 'admin@example.com' &&  req.body.password == 'admin'){
+    res.status(200).send({ data:{username:'admin@example.com', password: 'admin', role: 'admin'}, message: "Login Successfull" });
+  }else{
+    res.status(400).send({ message: "Invalid Login" });
+  }
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Customer = mongoose.model(
   "Customer",
   new mongoose.Schema({
-    user_id: {type:String,default: "u_" + Math.floor(10000000 + Math.random() * 90000000)},
+    user_id: {type:String},
     name: String,
     phone: Number,
     email: String,

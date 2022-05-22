@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 const Ride = mongoose.model(
   "Ride",
   new mongoose.Schema({
-    ride_id: {type:String,default: "r_" + Math.floor(10000000000 + Math.random() * 90000000000)},
+    ride_id: {type:String},
     user_id: {type:String, default: null},
     driver_id: {type:String, default: null},
+    partner_id: {type:String, default: null},
     ostype:  {type:String, default: null},
     fueltype:  {type:String, default: null},
     triptype:  {type:String, default: null},
