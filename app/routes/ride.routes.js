@@ -8,8 +8,9 @@ module.exports = function(app) {
     next();
   });
   app.post("/api/rideSave",controller.rideSave);
-  app.get("/api/ride/:status", controller.rideList);
+  app.post("/api/assignDriver",controller.assignDriver);
+  app.get("/api/ride/:status/:company_name", controller.rideList);
   app.get("/api/rideSingleDetails/:ride_id/:status", controller.rideSingleDetails);
-  app.post("/api/rideStatusUpdate",controller.rideStatusUpdate);
-  app.get("/api/rideOngoingList", controller.rideOngoingList);
+  app.post("/api/rideStatusUpdate/",controller.rideStatusUpdate);
+  app.get("/api/rideOngoingList/:company_name", controller.rideOngoingList);
 };

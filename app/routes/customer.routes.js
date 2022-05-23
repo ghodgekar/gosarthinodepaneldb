@@ -14,6 +14,6 @@ module.exports = function(app) {
     controller.customerSave
   );
   app.post("/api/customerUpdate", controller.customerUpdate);
-  app.get("/api/customer", controller.customerList);
+  app.get("/api/customer/:company_name", controller.customerList);
   app.get("/api/customerByPhone/:phone", controller.customerByPhone);
 };

@@ -12,6 +12,8 @@ const Customer = mongoose.model(
     city: String,
     pincode: Number,
     address: String,
+    partner_id: {type:String, default: null},
+    company_name: {type:String, default: null},
     created_on: {type:Date, default: Date.now()},
     updated_on: {type:Date, default: Date.now()},
     is_active: {type:Number, default: 1},

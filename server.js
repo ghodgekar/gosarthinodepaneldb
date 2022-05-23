@@ -34,7 +34,7 @@ require('./app/routes/partner.routes')(app);
 
 app.post("/api/login", (req, res) => {
   if(req.body.username == 'admin@example.com' &&  req.body.password == 'admin'){
-    res.status(200).send({ data:{username:'admin@example.com', password: 'admin', role: 'admin'}, message: "Login Successfull" });
+    res.status(200).send({ data:{username:'admin@example.com', password: 'admin'}, role: "admin", message: "Login Successfull" });
   }else{
     res.status(400).send({ message: "Invalid Login" });
   }

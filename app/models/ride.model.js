@@ -6,6 +6,7 @@ const Ride = mongoose.model(
     user_id: {type:String, default: null},
     driver_id: {type:String, default: null},
     partner_id: {type:String, default: null},
+    company_name: {type:String, default: null},
     ostype:  {type:String, default: null},
     fueltype:  {type:String, default: null},
     triptype:  {type:String, default: null},

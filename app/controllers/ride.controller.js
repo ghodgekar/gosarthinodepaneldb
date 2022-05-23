@@ -52,10 +52,10 @@ function validateDriverForm(payload) {
     errors.dropaddress = 'Please provide Drop Address.';
   }
 
-  if (!payload || typeof payload.driver_id !== 'string' || payload.driver_id.trim().length === 0) {
-    isFormValid = false;
-    errors.driver_id = 'Please Assign Driver.';
-  }
+  // if (!payload || typeof payload.driver_id !== 'string' || payload.driver_id.trim().length === 0) {
+  //   isFormValid = false;
+  //   errors.driver_id = 'Please Assign Driver.';
+  // }
 
   return {
       success: isFormValid,
@@ -101,11 +101,33 @@ exports.rideSave = (req, res) => {
 //   });
 // };
 
+exports.assignDriver = (req, res) => {
+    Ride.updateOne({ride_id:req.body.ride_id},req.body,(err, status) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }else{
+      res.status(200).send({ message: "Driver Assigned Successfully"  });
+      return;    
+    }
+  });
+};
+
 exports.rideList = (req, res) => {
-    Ride.find({
-    is_active: 1,
-    status: req.params.status
-  })
+  let query;
+  if(req.params.company_name === 'all'){
+    query = {
+      is_active: 1,
+      status: req.params.status
+    };
+  }else{
+    query = {
+      is_active: 1,
+      status: req.params.status,
+      company_name:req.params.company_name
+    };
+  }
+    Ride.find(query)
   .exec((err, ride) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -172,11 +194,21 @@ exports.rideStatusUpdate = (req, res) => {
 };
 
 exports.rideOngoingList = (req, res) => {
-  Ride.find({
-  is_active: 1,
-  status: { $in: [3,4,5,6] } 
-})
-.exec((err, ride) => {
+  let query;
+  if(req.params.company_name === 'all'){
+    query = {
+      is_active: 1,
+      status: { $in: [3,4,5,6] }
+    };
+  }else{
+    query = {
+      is_active: 1,
+      status: { $in: [3,4,5,6] } ,
+      company_name:req.params.company_name
+    };
+  }
+  Ride.find(query)
+  .exec((err, ride) => {
   if (err) {
     res.status(500).send({ message: err });
     return;

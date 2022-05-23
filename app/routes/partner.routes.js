@@ -11,9 +11,11 @@ module.exports = function(app) {
   app.post(
     "/api/partnerSave",
     [   
-        verifyPartner.checkDuplicatePhoneAndEmail,
-        verifyPartner.checkDuplicateGST,
-        verifyPartner.checkDuplicateUsername
+        // verifyPartner.checkDuplicatePhoneAndEmail,
+        // verifyPartner.checkDuplicateGST,
+        verifyPartner.checkDuplicateUsername,
+        verifyPartner.checkCompanyName,
+        verifyPartner.checkCompanyNo
     ],
     controller.partnerSave
   );

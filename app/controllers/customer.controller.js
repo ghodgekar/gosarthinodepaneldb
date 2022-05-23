@@ -94,9 +94,18 @@ exports.customerUpdate = (req, res) => {
 };
 
 exports.customerList = (req, res) => {
-    Customer.find({
-    is_active: 1
-  })
+  let query;
+    if(req.params.company_name === 'all'){
+      query = {
+        is_active: 1
+      };
+    }else{
+      query = {
+        is_active: 1,
+        company_name:req.params.company_name
+      };
+    }
+    Customer.find(query)
   .exec((err, customer) => {
     if (err) {
       res.status(500).send({ message: err });

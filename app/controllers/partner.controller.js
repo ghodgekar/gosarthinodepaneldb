@@ -173,7 +173,7 @@ exports.partnerLogin = (req, res) => {
           errors: validationResult.errors
       });
   }
-  Partner.find({
+  Partner.findOne({
     is_active: 1,
     username:req.body.username,
     password:req.body.password
@@ -184,7 +184,7 @@ exports.partnerLogin = (req, res) => {
       return;
     }
     if(!isEmpty(partner)){
-      res.status(200).send({ data:partner, message: "Login Successfull" });
+      res.status(200).send({ data:partner, role: "partner", message: "Login Successfull" });
     }else{
       res.status(400).send({ message: "Invalid Login" });
     }

@@ -29,6 +29,38 @@ checkDuplicatePhoneAndEmail = (req, res, next) => {
     });
   });
 };
+checkCompanyName = (req, res, next) => {
+    // phone
+    Partner.findOne({
+      company_name: req.body.company_name
+    }).exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      if (user) {
+        res.status(400).send({ message: "Failed! Company Name is already in use!" });
+        return;
+      }
+    });
+    next();
+};
+checkCompanyNo = (req, res, next) => {
+    // phone
+    Partner.findOne({
+      company_no: req.body.company_no
+    }).exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      if (user) {
+        res.status(400).send({ message: "Failed! Company Number is already in use!" });
+        return;
+      }
+    });
+    next();
+};
 checkDuplicateGST = (req, res, next) => {
     // phone
     Partner.findOne({
@@ -64,6 +96,8 @@ checkDuplicateUsername = (req, res, next) => {
 const verifyPartner = {
   checkDuplicatePhoneAndEmail,
   checkDuplicateGST,
+  checkCompanyName,
+  checkCompanyNo,
   checkDuplicateUsername
 };
 module.exports = verifyPartner;
