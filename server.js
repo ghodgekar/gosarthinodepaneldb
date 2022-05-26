@@ -33,8 +33,8 @@ require('./app/routes/ride.routes')(app);
 require('./app/routes/partner.routes')(app);
 
 app.post("/api/login", (req, res) => {
-  if(req.body.username == 'admin@example.com' &&  req.body.password == 'admin'){
-    res.status(200).send({ data:{username:'admin@example.com', password: 'admin'}, role: "admin", message: "Login Successfull" });
+  if(req.body.username == 'gosarthi@admin.com' &&  req.body.password == 'admin@123'){
+    res.status(200).send({ data:{username:'gosarthi@admin.com', password: 'admin@123'}, role: "admin", message: "Login Successfull" });
   }else{
     res.status(400).send({ message: "Invalid Login" });
   }
