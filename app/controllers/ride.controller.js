@@ -141,8 +141,7 @@ exports.rideList = (req, res) => {
 exports.rideSingleDetails = (req, res) => {
   Ride.findOne({
   is_active: 1,
-  ride_id: req.params.ride_id,
-  status: req.params.status
+  ride_id: req.params.ride_id
 })
 .exec((err, ride) => {
   if (err) {
