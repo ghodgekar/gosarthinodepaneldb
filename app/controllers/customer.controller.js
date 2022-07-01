@@ -118,7 +118,8 @@ exports.customerList = (req, res) => {
 exports.customerByPhone = (req, res) => {
     Customer.find({
     is_active: 1,
-    phone:req.params.phone
+    phone:req.params.phone,
+    partner_id:req.params.partner_id
   })
   .exec((err, customer) => {
     if (err) {

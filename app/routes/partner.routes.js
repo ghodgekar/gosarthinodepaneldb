@@ -20,7 +20,15 @@ module.exports = function(app) {
     controller.partnerSave
   );
   app.post("/api/partnerUpdate", controller.partnerUpdate);
-  app.get("/api/partner", controller.partnerList);
+  app.get("/api/partner/:status", controller.partnerList);
   app.get("/api/partnerByPhone/:phone", controller.partnerByPhone);
   app.post("/api/partnerLogin", controller.partnerLogin);
+  app.get("/api/singlePartner/:partner_id", controller.singlePartner);
+  app.post('/api/partnerStatusUpdate', controller.partnerStatusUpdate);
+  app.post('/api/partnerApproveReject', controller.partnerApproveReject);
+  app.post('/api/partnerHistorySave', controller.partnerHistorySave);
+  app.get("/api/partnerHistory/:partner_id", controller.partnerHistoryList);
+  app.post("/api/partnerDocSave", controller.partnerDocSave);
+  app.get("/api/partnerDoc/:partner_id", controller.partnerDocList);
+  app.get('/api/partnerDocImg', controller.partnerDocImage);
 };

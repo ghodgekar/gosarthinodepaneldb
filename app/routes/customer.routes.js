@@ -15,5 +15,5 @@ module.exports = function(app) {
   );
   app.post("/api/customerUpdate", controller.customerUpdate);
   app.get("/api/customer/:company_name", controller.customerList);
-  app.get("/api/customerByPhone/:phone", controller.customerByPhone);
+  app.get("/api/customerByPhone/:phone/:partner_id", controller.customerByPhone);
 };

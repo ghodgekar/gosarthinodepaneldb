@@ -22,10 +22,10 @@ function validateDriverForm(payload) {
     errors.fueltype = 'Please provide fuel type.';
   }
 
-  if (!payload || typeof payload.triptype !== 'string' || payload.triptype.trim().length === 0) {
-    isFormValid = false;
-    errors.triptype = 'Please provide trip type.';
-  }
+  // if (!payload || typeof payload.triptype !== 'string' || payload.triptype.trim().length === 0) {
+  //   isFormValid = false;
+  //   errors.triptype = 'Please provide trip type.';
+  // }
 
   if (!payload || typeof payload.vehicle_type !== 'string' || payload.vehicle_type.trim().length === 0) {
     isFormValid = false;
@@ -214,4 +214,38 @@ exports.rideOngoingList = (req, res) => {
   }
   res.status(200).send({ data:ride, message: "" });
 });
+};
+
+exports.rideListByPartner = (req, res) => {
+  let query;
+    query = {
+      is_active: 1,
+      partner_id:"p_23787286532", //req.params.partner_id //
+      status: { $ne: 1 }
+    };
+    Ride.find(query)
+  .exec((err, ride) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(200).send({ data:ride, message: "" });
+  });
+};
+
+exports.rideListByDriver = (req, res) => {
+  let query;
+    query = {
+      is_active: 1,
+      driver_id:req.params.driver_id, //req.params.partner_id //
+      status: { $ne: 1 }
+    };
+    Ride.find(query)
+  .exec((err, ride) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(200).send({ data:ride, message: "" });
+  });
 };

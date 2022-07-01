@@ -15,9 +15,16 @@ const Partner = mongoose.model(
     address: String,
     username: String,
     password: String,
+    bank_name: {type:String, default:null},
+    acc_holder_name: {type:String, default:null},
+    acc_no: {type:String, default:null},
+    ifsc_code: {type:String, default:null},
+    micr_code: {type:String, default:null},
+    status: {type:Number, default: 1},
+    reject_reason: {type:String, default:null},
+    is_active: {type:Number, default: 1},
     created_on: {type:Date, default: Date.now()},
     updated_on: {type:Date, default: Date.now()},
-    is_active: {type:Number, default: 1},
   },{
     versionKey: false // You should be aware of the outcome after set to false
   })

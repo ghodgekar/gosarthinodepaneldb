@@ -49,7 +49,7 @@ app.listen(PORT, () => {
 const db = require("./app/models");
 const Role = db.role;
 db.mongoose
-.connect(`mongodb+srv://surabhi:surabhi30@gosarthiadminpanel.pqkck.mongodb.net/newnodedb`, {
+.connect(`mongodb+srv://surabhi:surabhi30@gosarthiadminpanel.pqkck.mongodb.net/admin_panel`, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

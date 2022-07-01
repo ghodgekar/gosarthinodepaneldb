@@ -13,4 +13,6 @@ module.exports = function(app) {
   app.get("/api/rideSingleDetails/:ride_id", controller.rideSingleDetails);
   app.post("/api/rideStatusUpdate/",controller.rideStatusUpdate);
   app.get("/api/rideOngoingList/:company_name", controller.rideOngoingList);
+  app.get("/api/rideByPartner/:partner_id", controller.rideListByPartner);
+  app.get("/api/rideByDriver/:driver_id", controller.rideListByDriver);
 };
