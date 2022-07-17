@@ -116,11 +116,20 @@ exports.customerList = (req, res) => {
 };
 
 exports.customerByPhone = (req, res) => {
-    Customer.find({
-    is_active: 1,
-    phone:req.params.phone,
-    partner_id:req.params.partner_id
-  })
+  let query;
+    if(req.params.partner_id === 'null'){
+      query = {
+        is_active: 1,
+        phone:req.params.phone
+      };
+    }else{
+      query = {
+        is_active: 1,
+        phone:req.params.phone,
+        partner_id:req.params.partner_id
+      };
+    }
+    Customer.find(query)
   .exec((err, customer) => {
     if (err) {
       res.status(500).send({ message: err });

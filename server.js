@@ -31,6 +31,7 @@ require('./app/routes/customer.routes')(app);
 require('./app/routes/driver.routes')(app);
 require('./app/routes/ride.routes')(app);
 require('./app/routes/partner.routes')(app);
+require('./app/routes/carmodel.routes')(app);
 
 app.post("/api/login", (req, res) => {
   if(req.body.username == 'gosarthi@admin.com' &&  req.body.password == 'admin@123'){

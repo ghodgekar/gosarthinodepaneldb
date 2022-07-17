@@ -1,7 +1,10 @@
 const db = require("../models");
+const path = require('path');
 const Ride = db.ride;
 const Customer = db.customer;
 const Driver = db.driver;
+const RideCarImages = db.ride_car_images;
+const ReassignDriver = db.reassign_driver;
 
 function validateDriverForm(payload) {
   let errors = {};
@@ -37,11 +40,6 @@ function validateDriverForm(payload) {
     errors.vehicle_transmission = 'Please provide vehicle transmission.';
   }
 
-  if (!payload || typeof payload.car_no !== 'string' || payload.car_no.trim().length === 0) {
-    isFormValid = false;
-    errors.car_no = 'Please provide Car Number.';
-  }
-
   if (!payload || typeof payload.pickupaddress !== 'string' || payload.pickupaddress.trim().length === 0) {
     isFormValid = false;
     errors.pickupaddress = 'Please provide Pickup Address.';
@@ -50,6 +48,11 @@ function validateDriverForm(payload) {
   if (!payload || typeof payload.dropaddress !== 'string' || payload.dropaddress.trim().length === 0) {
     isFormValid = false;
     errors.dropaddress = 'Please provide Drop Address.';
+  }
+
+  if (!payload || (typeof payload.appointment_no !== 'string' && typeof payload.car_no !== 'string')) {
+    isFormValid = false;
+    errors.car_no = 'Please provide Car No Or Appointment';
   }
 
   // if (!payload || typeof payload.driver_id !== 'string' || payload.driver_id.trim().length === 0) {
@@ -220,7 +223,7 @@ exports.rideListByPartner = (req, res) => {
   let query;
     query = {
       is_active: 1,
-      partner_id:"p_23787286532", //req.params.partner_id //
+      partner_id:req.params.partner_id, //req.params.partner_id //
       status: { $ne: 1 }
     };
     Ride.find(query)
@@ -247,5 +250,78 @@ exports.rideListByDriver = (req, res) => {
       return;
     }
     res.status(200).send({ data:ride, message: "" });
+  });
+};
+
+exports.rideCarImageSave = (req, res, next) => {
+  let dest;
+  if(req.body.ride_type == 4){
+    dest = path.resolve('uploads/ride/pickup');
+  }else if(req.body.ride_type == 5){
+    dest = path.resolve('uploads/ride/drop');
+  }
+  const file = req.files['ride_img'];
+  const filename = Date.now()+'_'+req.body.ride_id+'.png';
+  file.mv(dest + "/" + filename, (err) => {
+    if (err) {
+        return res.status(500).send({ message: err, code: 200 });
+    }
+    let rideimgData = {'ride_id':req.body.ride_id,'img_type':req.body.ride_type,'img_path':filename};
+    const ridedoc = new RideCarImages(rideimgData);
+    ridedoc.save((err, ridedoc) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }else {
+        res.status(200).send({ message: "Driver Document Saved Successfully" });
+        return;    
+      }
+    });
+  });
+};
+
+exports.rideCarList = (req, res) => {
+  RideCarImages.find({
+    ride_id: req.params.ride_id,
+    img_type: req.params.img_type
+  })
+  .exec((err, rideImg) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(200).send({ data:rideImg, message: "" });
+  });
+};
+
+exports.rideCarImage = (req, res) => {
+  return res.sendFile(req.query.imgpath, { root: '.' })
+};
+
+exports.rideReassignDataSave = (req, res, next) => {
+  let rideimgData = {'ride_id':req.body.ride_id,'driver_id':req.body.driver_id,'driver_name':req.body.driver_name,'city':req.body.city,'time':req.body.time,'exist_parking_no':req.body.exist_parking_no};
+  const ridedoc = new ReassignDriver(rideimgData);
+  ridedoc.save((err, ridedoc) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }else {
+      res.status(200).send({ message: "Saved Successfully" });
+      return;    
+    }
+  });
+};
+
+exports.rideReassignDataList = (req, res) => {
+  ReassignDriver.find({
+    ride_id: req.params.ride_id,
+    exist_parking_no: req.params.exist_parking_no
+  })
+  .exec((err, rideImg) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(200).send({ data:rideImg, message: "" });
   });
 };

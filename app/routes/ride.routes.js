@@ -15,4 +15,9 @@ module.exports = function(app) {
   app.get("/api/rideOngoingList/:company_name", controller.rideOngoingList);
   app.get("/api/rideByPartner/:partner_id", controller.rideListByPartner);
   app.get("/api/rideByDriver/:driver_id", controller.rideListByDriver);
+  app.post("/api/uploadRideCarImg",controller.rideCarImageSave);
+  app.get("/api/rideCarImgList/:ride_id/:img_type", controller.rideCarList);
+  app.get('/api/rideCarImg', controller.rideCarImage);
+  app.post("/api/rideReassignDataSave",controller.rideReassignDataSave);
+  app.get("/api/rideReassignDataList/:ride_id/:exist_parking_no", controller.rideReassignDataList);
 };
