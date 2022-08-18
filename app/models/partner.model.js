@@ -3,6 +3,7 @@ const Partner = mongoose.model(
   "Partner",
   new mongoose.Schema({
     partner_id: String,
+    partner_type: String,
     company_name: String,
     company_no: String,
     gst_no: String,

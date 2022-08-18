@@ -166,6 +166,10 @@ exports.rideStatusUpdate = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }else{
+      if(req.body.status == 1){
+        res.status(200).send({ message: "Ride Confirm"  });
+        return;
+      }
       if(req.body.status == 3){
         res.status(200).send({ message: "Ride Started Successfully"  });
         return;
@@ -190,7 +194,10 @@ exports.rideStatusUpdate = (req, res) => {
         res.status(200).send({ message: "Ride Cancelled Successfully"  });
         return;
       }
-      
+      if(req.body.status == 9){
+        res.status(200).send({ message: "Trailer Fare request sent to partner"  });
+        return;
+      }
     }
   });
 };

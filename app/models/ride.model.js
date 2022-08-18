@@ -27,6 +27,7 @@ const Ride = mongoose.model(
     requesttime:{type:Date, default: Date.now()},
     bookingtype: {type:String, default: null},
     price: {type:String, default: null},
+    gst: {type:String, default: null},
     rating: {type:String, default: null},
     feedback: {type:String, default: null},
     cancelled_reason: {type:String, default: null},

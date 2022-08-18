@@ -9,6 +9,11 @@ function validatePartnerForm(payload) {
   let errors = {};
   let isFormValid = true;
 
+  if (!payload || typeof payload.partner_type !== 'string' || payload.partner_type.trim().length === 0) {
+    isFormValid = false;
+    errors.partner_type = 'Please provide partner type.';
+  }
+
   if (!payload || typeof payload.company_name !== 'string' || payload.company_name.trim().length === 0) {
     isFormValid = false;
     errors.company_name = 'Please provide company_name.';
