@@ -5,6 +5,7 @@ const Customer = db.customer;
 const Driver = db.driver;
 const RideCarImages = db.ride_car_images;
 const ReassignDriver = db.reassign_driver;
+const RideAccidentImgVideo = db.ride_accident_img_video;
 
 function validateDriverForm(payload) {
   let errors = {};
@@ -198,6 +199,14 @@ exports.rideStatusUpdate = (req, res) => {
         res.status(200).send({ message: "Trailer Fare request sent to partner"  });
         return;
       }
+      if(req.body.accident_status == 1){
+        res.status(200).send({ message: "Accidental Video and Image Approved"  });
+        return;
+      }
+      if(req.body.accident_status == 0){
+        res.status(200).send({ message: "Accidental Video and Image Rejected"  });
+        return;
+      }
     }
   });
 };
@@ -287,10 +296,54 @@ exports.rideCarImageSave = (req, res, next) => {
   });
 };
 
+exports.rideAccidentImgVideoSave = (req, res, next) => {
+  const file = req.files['ride_accidental_img'];
+  let dest;
+  let file_type;
+  if(path.extname(file.name) == '.mp4'){
+    dest = path.resolve('uploads/accident/video');
+    file_type = 'video';
+  }else{
+    dest = path.resolve('uploads/accident/img');
+    file_type = 'img';
+  }
+  const filename = Date.now()+'_'+req.body.ride_id + path.extname(file.name);
+  file.mv(dest + "/" + filename, (err) => {
+    if (err) {
+        return res.status(500).send({ message: err, code: 200 });
+    }
+    let rideimgData = {'ride_id':req.body.ride_id,'file_type':file_type,'path':filename, 'ride_accidental_comment':req.body.ride_accidental_comment};
+    const ridedoc = new RideAccidentImgVideo(rideimgData);
+    ridedoc.save((err, ridedoc) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }else {
+        res.status(200).send({ message: "Driver Document Saved Successfully" });
+        return;    
+      }
+    });
+  });
+};
+
 exports.rideCarList = (req, res) => {
   RideCarImages.find({
     ride_id: req.params.ride_id,
     img_type: req.params.img_type
+  })
+  .exec((err, rideImg) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    res.status(200).send({ data:rideImg, message: "" });
+  });
+};
+
+exports.rideAccidentImgList = (req, res) => {
+  RideAccidentImgVideo.find({
+    ride_id: req.params.ride_id,
+    file_type: req.params.file_type
   })
   .exec((err, rideImg) => {
     if (err) {
@@ -331,4 +384,26 @@ exports.rideReassignDataList = (req, res) => {
     }
     res.status(200).send({ data:rideImg, message: "" });
   });
+};
+
+exports.updateRideAddress = (req, res) => {
+  let query;
+  if(req.body.address_type == 'pickup'){
+    query = {
+      pickupaddress: req.body.address
+    };
+  }else{
+    query = {
+      dropaddress: req.body.address
+    };
+  }
+  Ride.updateOne({ride_id:req.body.ride_id},query,(err, status) => {
+  if (err) {
+    res.status(500).send({ message: err });
+    return;
+  }else{
+    res.status(200).send({ message: "Ride Address Updated Successfully"  });
+    return;    
+  }
+});
 };

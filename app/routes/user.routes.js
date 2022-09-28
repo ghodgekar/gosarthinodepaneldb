@@ -1,4 +1,5 @@
-const { authJwt } = require("../middlewares");
+// const { authJwt } = require("../middlewares");
+const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/user.controller");
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -8,15 +9,17 @@ module.exports = function(app) {
     );
     next();
   });
-  app.get("/api/all", controller.allAccess);
-  app.get(
-    "/api/user",
-    [authJwt.verifyToken, authJwt.isUser],
-    controller.userBoard
-  );
-  app.get(
-    "/api/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
+  // app.get("/api/all", controller.allAccess);
+  app.post("/api/add/user",[verifySignUp.checkDuplicateUsernameOrEmail], controller.userSave);
+  app.post("/api/signin/user", controller.userLogin);
+  // app.get(
+  //   "/api/user",
+  //   [authJwt.verifyToken, authJwt.isUser],
+  //   controller.userBoard
+  // );
+  // app.get(
+  //   "/api/admin",
+  //   [authJwt.verifyToken, authJwt.isAdmin],
+  //   controller.adminBoard
+  // );
 };

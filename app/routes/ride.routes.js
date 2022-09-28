@@ -22,4 +22,10 @@ module.exports = function(app) {
   app.post("/api/rideReassignDataSave",controller.rideReassignDataSave);
   app.get("/api/rideReassignDataList/:ride_id/:exist_parking_no", controller.rideReassignDataList);
   app.post("/api/b2cTrailerFare",b2cFarecontroller.calculate);
+  app.post("/api/b2bFinalCalculationDriver",b2cFarecontroller.b2bFinalDriverCalculation);
+
+  
+  app.post("/api/uploadRideAccidentImgVideo",controller.rideAccidentImgVideoSave);
+  app.get("/api/rideAccidentImgVideoList/:ride_id/:file_type", controller.rideAccidentImgList);
+  app.post("/api/updateRideAddress",controller.updateRideAddress);
 };

@@ -4,13 +4,11 @@ const User = mongoose.model(
   new mongoose.Schema({
     username: String,
     email: String,
+    mobile: Number,
     password: String,
-    roles: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Role"
-      }
-    ]
+    role: String
+  },{
+    versionKey: false
   })
 );
 module.exports = User;

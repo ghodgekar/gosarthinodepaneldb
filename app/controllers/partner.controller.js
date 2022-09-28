@@ -192,7 +192,7 @@ exports.partnerLogin = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }
-    if(!isEmpty(partner)){
+    if(partner){
       res.status(200).send({ data:partner, role: "partner", message: "Login Successfull" });
     }else{
       res.status(400).send({ message: "Invalid Login" });
